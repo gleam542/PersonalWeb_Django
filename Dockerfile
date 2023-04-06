@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # 運行Django服務
-CMD python manage.py migrate
+RUN python manage.py migrate
