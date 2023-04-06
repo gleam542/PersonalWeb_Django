@@ -6,10 +6,12 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: mick123
       MYSQL_DATABASE: example_db
-      MYSQL_USER: example_user
-      MYSQL_PASSWORD: example_password
+      MYSQL_USER: mick
+      MYSQL_PASSWORD: mick123
+    ports:
+      - "3306:3306"
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -17,7 +19,7 @@ services:
       - '8080:80'
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: example_password
+      MYSQL_ROOT_PASSWORD: mick123
 
   web:
     build: .
@@ -28,6 +30,11 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    environment:
+      - EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+      - EMAIL_HOST=smtp.gmail.com
+      - EMAIL_PORT=587
+
 
 volumes:
   dbdata:

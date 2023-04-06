@@ -1,4 +1,5 @@
 FROM python:3.10
+
 WORKDIR /app
 
 # 複製依賴文件
