@@ -12,8 +12,6 @@ services:
       MYSQL_DATABASE: example_db
       MYSQL_USER: mick
       MYSQL_PASSWORD: mick123
-    ports:
-      - "3306:3306"
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -25,8 +23,7 @@ services:
 
   web:
     build: .
-    command: bash -c "echo 'sleeping for 20 seconds' && sleep 20 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    restart: always
+    command: bash -c "echo 'sleeping for 30 seconds' && sleep 30 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
