@@ -12,6 +12,8 @@ services:
       MYSQL_DATABASE: example_db
       MYSQL_USER: mick
       MYSQL_PASSWORD: mick123
+    ports:
+      - '3306:3306'
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

@@ -12,3 +12,5 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # 運行Django服務
+
+CMD python manage.py runserver 0.0.0.0:8000
