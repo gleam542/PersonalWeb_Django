@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from django.core.mail.backends.smtp import EmailBackend
+import dj_database_url
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -88,10 +89,11 @@ WSGI_APPLICATION = 'djangotest.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='postgres://mick:m3RFzzPxpPbcaKuj2gDhQyuB3ubJPdZM@dpg-cgpop7ou9tun42tvj1a0-a/example_db_ccl2',
+        conn_max_age=600
+    )
 }
 
 
