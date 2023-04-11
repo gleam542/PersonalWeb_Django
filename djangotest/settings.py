@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'djangotest.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgres://mick:m3RFzzPxpPbcaKuj2gDhQyuB3ubJPdZM@dpg-cgpop7ou9tun42tvj1a0-a/example_db_ccl2',
+        default= os.getenv('db'),
         conn_max_age=600
     )
 }
