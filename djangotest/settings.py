@@ -89,12 +89,16 @@ WSGI_APPLICATION = 'djangotest.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default= os.getenv('db'),
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'example_db',  # MySQL 資料庫名稱
+        'USER': 'mick',        # MySQL 資料庫使用者
+        'PASSWORD': 'mick123',  # MySQL 使用者密碼
+        'HOST': 'db',          # 這裡使用 Docker 容器中的服務名稱 'db'
+        'PORT': '3306',        # MySQL 的端口
+    }
 }
+
 
 
 # Password validation
