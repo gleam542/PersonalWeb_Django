@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'djangotest.wsgi.application'
 DATABASES = {
     'default': {
                 'ENGINE': 'django.db.backends.postgresql',
-                'NAME': 'test',
+                'NAME': 'test_vs3m',
                 'USER': 'test_vs3m_user',
                 'PASSWORD': 'vcoufO2a3NFmQtPc8F2yC2kUXUHLKGsc',
                 'HOST': 'dpg-crtgldaj1k6c73ekksa0-a',
