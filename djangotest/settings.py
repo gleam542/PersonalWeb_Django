@@ -94,8 +94,7 @@ DATABASES = {
         'NAME': 'example_db',  # MySQL 資料庫名稱
         'USER': 'mick',        # MySQL 資料庫使用者
         'PASSWORD': 'mick123',  # MySQL 使用者密碼
-        'HOST': '0.0.0.0',          # 這裡使用 Docker 容器中的服務名稱 'db'
-        'PORT': '10000',        # MySQL 的端口
+  
     }
 }
 
