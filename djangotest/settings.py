@@ -88,12 +88,16 @@ WSGI_APPLICATION = 'djangotest.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default= os.getenv('db'),
-        conn_max_age=600
-    )
+DATABASES = 
+{
+    'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'test',
+                'USER': 'test_vs3m_user',
+                'PASSWORD': 'vcoufO2a3NFmQtPc8F2yC2kUXUHLKGsc',
+                'HOST': 'dpg-crtgldaj1k6c73ekksa0-a',
+                'PORT': '5432'
+                }
 }
 
 
