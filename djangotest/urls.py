@@ -22,5 +22,5 @@ from django.views.generic import TemplateView
 urlpatterns = [
     # path('', views.index, name='index'),
     path('api/contact/', contact, name='contact_api'),
-    path('', TemplateView.as_view(template_name='vue.html')),
+    path('', TemplateView.as_view(template_name='index.html')),
 ]
