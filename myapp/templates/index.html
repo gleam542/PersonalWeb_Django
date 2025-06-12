@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -7,21 +6,21 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Resume - Start Bootstrap Theme</title>
-        <link rel="icon" type="image/x-icon" href="{% static 'myapp/assets/img/favicon.ico' %}" />
+        <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'myapp/css/styles.css' %}" rel="stylesheet" />
+        <link href="./css/styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <span class="d-block d-lg-none">Mick Huang</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'myapp/assets/img/profile.jpg' %}" alt="..." /></span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="./assets/img/profile.jpg" alt="..." /></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -63,6 +62,14 @@
             <section class="resume-section" id="experience">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Experience</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">金融數據自動化分析師</h3>
+                            <div class="subheading mb-3">烽泰科技有限公司</div>
+                            <p>隸屬DATA部門:<br> 1.程式撰寫：資料抓取、清洗與存庫(python、mysql )<br> 2.資料分析定位問題 <br> 3.跨部門溝通了解需求、處理需求 <br> 4.維護現有程式碼及新增程式碼<br> 使用技能： <br>1.windows <br>2.程式語言與框架：python <br>3.資料庫：mysql <br>4.測試api工具：postman <br>5.ide : vscode <br>6.git lab版控 <br>7.其他:Django、Databricks、AWS S3、爬蟲</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">February 2023 - Present</span></div>
+                    </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">軟體工程師</h3>
@@ -112,7 +119,7 @@
                                    動化測試系統完成各項測試項目
                                 <br><br>
                                 3.testcase、testplan撰寫:
-                                  共同編輯，若在各項測試途中發現有任何需要添加的項目，經與各個同事討論並達共識，       可添加入文件中以讓整個測試項目更加完善
+                                  共同編輯，若在各項測試途中發現有任何需要添加的項目，經與各個同事討論並達共識，可添加入文件中以讓整個測試項目更加完善
                                 <br><br>
                                 4.使用redmind 做issue分發與追蹤<br><br><br></p>
                         </div>
@@ -245,27 +252,13 @@
             <hr class="m-0" />
             <!-- contacts me-->
             <section class="resume-section" id="contacts me">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">contacts me</h2>
-                    {% if message_sent %}
-                    <p>Your message has been sent. Thank you!</p>
-                    {% endif %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <label for="name">Name:</label>
-                        <input type="text" name="name" required><br><br>
-                        <label for="email">Email:</label>
-                        <input type="email" name="email" required><br><br>
-                        <label for="message">Message:</label><br>
-                        <textarea name="message" rows="5" cols="30" required></textarea><br><br>
-                        <input type="submit" name="submit" value="Submit">
-                    </form>
+                <div class="resume-section-content" id="app">
                 </div>
             </section>
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="{% static 'myapp/js/scripts.js' %}"></script>
+        <script src="./js/scripts.js"></script>
     </body>
 </html>
