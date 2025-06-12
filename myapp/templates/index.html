@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -6,21 +7,21 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Resume - Start Bootstrap Theme</title>
-        <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="{% static 'myapp/assets/img/favicon.ico' %}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="./css/styles.css" rel="stylesheet" />
+        <link href="{% static 'myapp/css/styles.css' %}" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <span class="d-block d-lg-none">Mick Huang</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="./assets/img/profile.jpg" alt="..." /></span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'myapp/assets/img/profile.jpg' %}" alt="..." /></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -252,13 +253,27 @@
             <hr class="m-0" />
             <!-- contacts me-->
             <section class="resume-section" id="contacts me">
-                <div class="resume-section-content" id="app">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">contacts me</h2>
+                    {% if message_sent %}
+                    <p>Your message has been sent. Thank you!</p>
+                    {% endif %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" required><br><br>
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" required><br><br>
+                        <label for="message">Message:</label><br>
+                        <textarea name="message" rows="5" cols="30" required></textarea><br><br>
+                        <input type="submit" name="submit" value="Submit">
+                    </form>
                 </div>
             </section>
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="./js/scripts.js"></script>
+        <script src="{% static 'myapp/js/scripts.js' %}"></script>
     </body>
 </html>
