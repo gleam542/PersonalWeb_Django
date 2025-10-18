@@ -27,24 +27,15 @@ def contact(request):
         # 驗證通過，先儲存到資料庫
         instance = form.save()
 
-        # 嘗試寄送通知信
-        try:
-            send_mail(
-                subject=f"{instance.name} 在個人網頁傳送訊息",
-                message=f"From: {instance.email}\n\n{instance.message}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.DEFAULT_TO_EMAIL],
-                fail_silently=False,
-            )
-        except Exception as e:
-            # 即使寄信失敗，也應告知使用者訊息已收到
-            # 後台需要有機制監控這類錯誤
-            print(f"!!! Mail sending failed: {e}")
-            return JsonResponse({
-                'status': 'warning',
-                'message': 'Message saved, but notification email could not be sent.'
-            })
-        
+        # 寄送通知信
+        send_mail(
+            subject=f"{instance.name} 在個人網頁傳送訊息",
+            message=f"From: {instance.email}\n\n{instance.message}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.DEFAULT_TO_EMAIL],
+            fail_silently=False,
+        )
+    
         return JsonResponse({'status': 'success', 'message': f'Thank you, {instance.name}, your message has been sent!'})
     else:
         # 驗證失敗，回傳錯誤給前端
