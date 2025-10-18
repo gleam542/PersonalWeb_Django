@@ -12,17 +12,20 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
-from django.core.mail.backends.smtp import EmailBackend
-import dj_database_url
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER ='gleam542@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'gleam542@gmail.com'
-DEFAULT_TO_EMAIL = 'gleam542@gmail.com'
+# 1. 設定 Email Backend 為 Anymail 的 SendGrid 後端
+EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+
+# 2. 設定 Anymail，讓它從環境變數讀取 SendGrid 的 API Key
+ANYMAIL = {
+    "SENDGRID_API_KEY": os.environ.get('SENDGRID_API_KEY'),
+}
+
+# 3. 設定預設的寄件人信箱
+DEFAULT_FROM_EMAIL = 'gleam542@gmail.com' 
+
+# 4. 設定全站統一的錯誤回報信箱
+SERVER_EMAIL = 'gleam542@gmail.com'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0wr^=zh@u!1u4svh_1t@)o2jp(@r4s2mi$nh4$0&-a_1qe&p$t'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
