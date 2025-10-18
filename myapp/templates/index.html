@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Resume - Start Bootstrap Theme</title>
+        <title>冠智的個人網站 - Start Bootstrap Theme</title>
         <link rel="icon" type="image/x-icon" href="{% static 'myapp/assets/img/favicon.ico' %}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -51,10 +51,10 @@
                     </div>
                     <p class="lead mb-5">你好，歡迎來到我的個人網站，我是一個對程式語言有濃厚興趣的人，喜歡嘗試不同的程式語言並學習其背後的設計原理和實現方式。</p>
                     <div class="social-icons">
-                        <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="social-icon" href="https://www.linkedin.com/in/mickpersonal/"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="https://github.com/gleam542/"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="social-icon" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="social-icon" href="https://x.com/gleam542"><i class="fab fa-twitter"></i></a>
+                        <a class="social-icon" href="https://www.facebook.com/draco.huang"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
             </section>
@@ -252,24 +252,88 @@
             </section>
             <hr class="m-0" />
             <!-- contacts me-->
-            <section class="resume-section" id="contacts me">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">contacts me</h2>
-                    {% if message_sent %}
-                    <p>Your message has been sent. Thank you!</p>
-                    {% endif %}
-                    <form method="POST">
+            <style>
+                /* 簡單的表單樣式，讓它好看一點 */
+                .form-group { margin-bottom: 1rem; }
+                .form-control { display: block; width: 100%; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; border-radius: .25rem; }
+                .btn { display: inline-block; font-weight: 400; text-align: center; white-space: nowrap; vertical-align: middle; user-select: none; border: 1px solid transparent; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; }
+                .btn-primary { color: #fff; background-color: #007bff; border-color: #007bff; }
+                /* 訊息提示的樣式 */
+                #form-message.success { color: green; }
+                #form-message.error { color: red; }
+            </style>
+
+            <section class="resume-section" id="contacts me"> <div class="resume-section-content">
+                    <h2 class="mb-5">Contact Me</h2>
+                    
+                    <div id="form-message"></div>
+
+                    <form id="contactForm" method="POST">
                         {% csrf_token %}
-                        <label for="name">Name:</label>
-                        <input type="text" name="name" required><br><br>
-                        <label for="email">Email:</label>
-                        <input type="email" name="email" required><br><br>
-                        <label for="message">Message:</label><br>
-                        <textarea name="message" rows="5" cols="30" required></textarea><br><br>
-                        <input type="submit" name="submit" value="Submit">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Submit">
                     </form>
                 </div>
             </section>
+            <script>
+                // 取得表單元素和訊息顯示區塊
+                const contactForm = document.getElementById('contactForm');
+                const formMessage = document.getElementById('form-message');
+                // 取得 CSRF token
+                const csrfToken = contactForm.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                contactForm.addEventListener('submit', function(event) {
+                    // 1. 防止表單的預設提交行為 (防止頁面刷新)
+                    event.preventDefault();
+
+                    // 2. 獲取表單資料
+                    const formData = new FormData(contactForm);
+                    const data = Object.fromEntries(formData.entries());
+
+                    // 3. 使用 fetch API 發送請求到你的後端 API
+                    fetch("{% url 'contact_api' %}", { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken // 將 CSRF token 放在 header 中
+                        },
+                        body: JSON.stringify(data) // 將資料轉為 JSON 字串
+                    })
+                    .then(response => response.json()) // 解析回傳的 JSON
+                    .then(result => {
+                        // 4. 根據後端回傳的結果更新頁面
+                        if (result.status === 'success' || result.status === 'warning') {
+                            formMessage.textContent = result.message || 'Thank you! Your message has been sent.';
+                            formMessage.className = 'success';
+                            contactForm.reset(); // 清空表單
+                        } else {
+                            // 將後端驗證的錯誤訊息顯示出來
+                            let errorMessage = result.message || 'An error occurred. Please try again.';
+                            if (result.errors) {
+                                errorMessage = Object.values(result.errors).map(e => e[0]).join(' ');
+                            }
+                            formMessage.textContent = errorMessage;
+                            formMessage.className = 'error';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        formMessage.textContent = 'A network error occurred. Please try again later.';
+                        formMessage.className = 'error';
+                    });
+                });
+            </script>
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
