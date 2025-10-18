@@ -32,7 +32,7 @@ def contact(request):
             subject=f"{instance.name} 在個人網頁傳送訊息",
             message=f"From: {instance.email}\n\n{instance.message}",
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.DEFAULT_TO_EMAIL],
+            recipient_list=[settings.SERVER_EMAIL],
             fail_silently=False,
         )
     
