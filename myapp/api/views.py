@@ -1,9 +1,12 @@
 import json
+import logging
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from myapp.forms import ContactForm
+
+logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def contact(request):
@@ -27,7 +30,7 @@ def contact(request):
         # 驗證通過，先儲存到資料庫
         instance = form.save()
 
-        # 寄送通知信（失敗不影響前端成功回應）
+        # 寄送通知信
         try:
             send_mail(
                 subject=f"{instance.name} 在個人網頁傳送訊息",
@@ -36,8 +39,12 @@ def contact(request):
                 recipient_list=[settings.SERVER_EMAIL],
                 fail_silently=False,
             )
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("send_mail failed: %s", e, exc_info=True)
+            return JsonResponse({
+                'status': 'warning',
+                'message': f'Thank you, {instance.name}! Your message was saved but email notification failed: {e}'
+            })
 
         return JsonResponse({'status': 'success', 'message': f'Thank you, {instance.name}, your message has been sent!'})
     else:
