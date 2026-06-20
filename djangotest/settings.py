@@ -13,18 +13,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-# 1. 設定 Email Backend 為 Anymail 的 SendGrid 後端
-EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'gleam542@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-# 2. 設定 Anymail，讓它從環境變數讀取 SendGrid 的 API Key
-ANYMAIL = {
-    "SENDGRID_API_KEY": os.environ.get('SENDGRID_API_KEY'),
-}
-
-# 3. 設定預設的寄件人信箱
-DEFAULT_FROM_EMAIL = 'gleam542@gmail.com' 
-
-# 4. 設定全站統一的錯誤回報信箱
+DEFAULT_FROM_EMAIL = 'gleam542@gmail.com'
 SERVER_EMAIL = 'gleam542@gmail.com'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -139,4 +135,25 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'myapp': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 
