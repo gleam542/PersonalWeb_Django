@@ -25,8 +25,7 @@ def contact(request):
 
         try:
             resend.api_key = settings.RESEND_API_KEY
-            logger.error("RESEND_API_KEY prefix: %s", str(settings.RESEND_API_KEY)[:10] if settings.RESEND_API_KEY else 'NOT SET')
-            resend.Emails.send({
+resend.Emails.send({
                 'from': settings.DEFAULT_FROM_EMAIL,
                 'to': [settings.SERVER_EMAIL],
                 'subject': f"{instance.name} 在個人網頁傳送訊息",
