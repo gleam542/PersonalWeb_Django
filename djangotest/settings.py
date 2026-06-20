@@ -13,15 +13,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'gleam542@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_TIMEOUT = 10
+EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
+ANYMAIL = {
+    'RESEND_API_KEY': os.environ.get('RESEND_API_KEY'),
+}
 
-DEFAULT_FROM_EMAIL = 'gleam542@gmail.com'
+DEFAULT_FROM_EMAIL = 'onboarding@resend.dev'
 SERVER_EMAIL = 'gleam542@gmail.com'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
