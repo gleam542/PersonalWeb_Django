@@ -297,6 +297,13 @@
                     // 1. 防止表單的預設提交行為 (防止頁面刷新)
                     event.preventDefault();
 
+                    // 顯示送出中狀態
+                    const submitBtn = contactForm.querySelector('input[type="submit"]');
+                    submitBtn.disabled = true;
+                    submitBtn.value = 'Sending...';
+                    formMessage.textContent = '';
+                    formMessage.className = '';
+
                     // 2. 獲取表單資料
                     const formData = new FormData(contactForm);
                     const data = Object.fromEntries(formData.entries());
@@ -331,6 +338,10 @@
                         console.error('Error:', error);
                         formMessage.textContent = 'A network error occurred. Please try again later.';
                         formMessage.className = 'error';
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.value = 'Submit';
                     });
                 });
             </script>
