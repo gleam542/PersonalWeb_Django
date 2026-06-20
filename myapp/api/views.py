@@ -27,15 +27,18 @@ def contact(request):
         # 驗證通過，先儲存到資料庫
         instance = form.save()
 
-        # 寄送通知信
-        send_mail(
-            subject=f"{instance.name} 在個人網頁傳送訊息",
-            message=f"From: {instance.email}\n\n{instance.message}",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.SERVER_EMAIL],
-            fail_silently=False,
-        )
-    
+        # 寄送通知信（失敗不影響前端成功回應）
+        try:
+            send_mail(
+                subject=f"{instance.name} 在個人網頁傳送訊息",
+                message=f"From: {instance.email}\n\n{instance.message}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.SERVER_EMAIL],
+                fail_silently=False,
+            )
+        except Exception:
+            pass
+
         return JsonResponse({'status': 'success', 'message': f'Thank you, {instance.name}, your message has been sent!'})
     else:
         # 驗證失敗，回傳錯誤給前端
